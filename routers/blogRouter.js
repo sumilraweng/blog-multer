@@ -4,11 +4,14 @@ const {
   getAllBlog,
   getBlogById,
   deleteBlog,
-  createBlog,
+  blogCreate,
 } = require("../controller/blogController");
 
-const { uploads } = require("../middleware/multerMiddleware");
-router.route("/").get(getAllBlog).post(uploads.single("blog"), createBlog);
+const { uploads, genId } = require("../middleware/multerMiddleware");
+router
+  .route("/")
+  .get(getAllBlog)
+  .post(genId, uploads.single("blogImage"), blogCreate);
 router.route("/:id").get(getBlogById).delete(deleteBlog);
 
 module.exports = router;
