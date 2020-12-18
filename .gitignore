@@ -1,0 +1,4 @@
+blogImages/images/*
+config.env
+node_modules
+package-lock.json
