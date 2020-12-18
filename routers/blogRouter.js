@@ -7,7 +7,8 @@ const {
   createBlog,
 } = require("../controller/blogController");
 
-router.route("/").get(getAllBlog).post(createBlog);
+const { uploads } = require("../middleware/multerMiddleware");
+router.route("/").get(getAllBlog).post(uploads.single("blog"), createBlog);
 router.route("/:id").get(getBlogById).delete(deleteBlog);
 
 module.exports = router;
