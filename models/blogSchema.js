@@ -17,14 +17,17 @@ module.exports.BlogSchema = new mongoose.Schema({
     type: String,
     required: [true, "required blog content "],
   },
-  blogReleatedLinks: [
-    {
-      _id: false,
-      linkId: {
-        type: String,
-        required: true,
+  blogReleatedLinks: {
+    type: [
+      {
+        _id: false,
+        linkId: {
+          type: String,
+          required: true,
+        },
+        title: { type: String, required: true },
       },
-      title: { type: String, required: true },
-    },
-  ],
+    ],
+    required: true,
+  },
 });
