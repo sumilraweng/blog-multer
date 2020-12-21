@@ -18,14 +18,14 @@ We also implemented the the crud operation using mongodb atlas
 ```json
 {
   "blogTitle": "sleep",
-  "blogContent":"This  is the content of soemthing",
-  "blogReleatedLinks":"[
-  {
-    "linkId": "ayc2t33kiuhhbmy",
-    "title": "java the hero"
-  }
-]"
-"blogImage":"avatar.png"
+  "blogContent": "This  is the content of soemthing",
+  "blogReleatedLinks": [
+    {
+      "linkId": "ayc2t33kiuhhbmy",
+      "title": "java the hero"
+    }
+  ],
+  "blogImage": "avatar.png"
 }
 ```
 
@@ -109,5 +109,5 @@ database you want to use config that database
 
 Use the atlas mongo connect link here
 
-> IMAGE_SIZE=1024 _ 1024 _ 5
+> IMAGE*SIZE=1024 * 1024 \_ 5
 > config the image-size paramter
