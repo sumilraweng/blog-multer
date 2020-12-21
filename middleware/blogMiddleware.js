@@ -1,6 +1,16 @@
 const { deleteFile } = require("../helpers/deleteImage");
 const { isBlogExists } = require("../models/mongoCrud");
 
+module.exports.checkingImage = (req, res, next) => {
+  if (!req.file) {
+    return res.status(400).json({
+      status: "unsuccessfull",
+      message: "Request body is invalid",
+    });
+  }
+  next();
+};
+
 module.exports.filterReqBody = (req, res, next) => {
   if (req.body.blogReleatedLinks) {
     req.body.blogReleatedLinks = JSON.parse(req.body.blogReleatedLinks);
@@ -10,7 +20,7 @@ module.exports.filterReqBody = (req, res, next) => {
         blogReleatedLinks[i].linkId = blogReleatedLinks[i].linkId.trim();
         blogReleatedLinks[i].title = blogReleatedLinks[i].title.trim();
       } else {
-        if (deleteFile(req, res) == 400) {
+        if (deleteFile(req, res, req.file.filename) == 200) {
           return res.status(400).json({
             status: "unsuccessfull",
             message: "please enter the validate data ",
@@ -19,7 +29,7 @@ module.exports.filterReqBody = (req, res, next) => {
       }
     }
   } else {
-    if (deleteFile(req, res) == 400) {
+    if (deleteFile(req, res, req.file.filename) == 200) {
       return res.status(400).json({
         status: "unsuccessfull",
         message: "please enter the validate data ",

@@ -1,14 +1,10 @@
-const {deleteFile}=require("../helpers/deleteImage")
+const { deleteFile } = require("../helpers/deleteImage");
 const { createBlog, findBlog, deleteBlog } = require("../models/mongoCrud");
-const fs = require("fs");
-const path = require("path");
-
-
 
 module.exports.getAllBlog = async (req, res) => {
   try {
-    const allBlog = await findBlog(); 
-    res.status(200).json({ blogs: allBlog });
+    const allBlog = await findBlog();
+    res.status(200).json(allBlog);
   } catch (err) {
     res.status(400).json({
       status: "unsuccessfull",
@@ -17,14 +13,13 @@ module.exports.getAllBlog = async (req, res) => {
   }
 };
 
-module.exports.getBlogById = (req, res) => {
+module.exports.getBlogById = async (req, res) => {
   try {
-    const allBlog = await findBlog(req.blogId); 
-    res.status(200).json({ blogs: allBlog });
+    const allBlog = await findBlog({ blogId: req.params.id });
+    res.status(200).json(allBlog);
   } catch (err) {
     res.status(400).json({
       status: "unsuccessfull",
-      message: "Request body is invalid",
     });
   }
 };
@@ -46,9 +41,9 @@ module.exports.blogCreate = async (req, res) => {
       status: "blog Created ",
     });
   } catch (err) {
-    const response = deleteFile(req, res);
-    if (response == 400) {
-      res.status(400).json({
+    const response = deleteFile(req, res, req.file.filename);
+    if (response == 200) {
+      return res.status(400).json({
         status: "unsuccessfull",
         message: "Request body is invalid",
       });
@@ -56,4 +51,16 @@ module.exports.blogCreate = async (req, res) => {
   }
 };
 
-module.exports.deleteBlog = (req, res) => {};
+module.exports.deleteBlog = async (req, res) => {
+  try {
+    const blog = await deleteBlog({ blogId: req.params.id });
+    const url = blog.blogImage.split("/");
+    if (deleteFile(req, res, url[url.length - 1]) == 200) {
+      return res.status(200).json(blog);
+    }
+  } catch (err) {
+    res.status(400).json({
+      status: "unsuccessfull",
+    });
+  }
+};
