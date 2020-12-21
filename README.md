@@ -109,5 +109,5 @@ database you want to use config that database
 
 Use the atlas mongo connect link here
 
-> IMAGE*SIZE=1024 * 1024 \* 5
+> IMAGE_SIZE=1024 x 1024 x 5
 > config the image-size paramter
