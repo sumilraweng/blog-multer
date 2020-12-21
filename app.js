@@ -1,11 +1,11 @@
 const express = require("express");
 const dotenv = require("dotenv");
-dotenv.config({ path: "./config.env" });
 
 const blogRouter = require("./routers/blogRouter");
+dotenv.config({ path: "./config.env" });
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/blogs", express.static("blogImages/images"));
